@@ -54,7 +54,7 @@
    - [🌐 لینک دانلود برای مرورگر Chrome](https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc)
    - [🌐 لینک دانلود برای مرورگر Firefox](https://addons.mozilla.org/en-US/firefox/addon/get-cookies-txt-locally/)
 2. **دریافت کوکی:** در مرورگر خود وارد سایت YouTube شوید و به حساب کاربری خود لاگین کنید (پیشنهاد می‌شود برلی احتیاط از یک اکانت فرعی Gmail استفاده کنید).
-4. روی آیکون افزونه‌ای که نصب کردید کلیک کنید و گزینه **Export** را بزنید. فایلی به نام `www.youtube.com_cookies.txt` دانلود می‌شود.
+4. روی آیکون افزونه‌ای که نصب کردید کلیک کنید و گزینه **Export as** را بزنید. فایل را در مسیر دلخواه ذخیره کنید.
 5. **ثبت در گیت‌هاب:** فایل را با Notepad باز کرده و **کل محتوای آن** را کپی کنید.
 6. به گیت‌هاب برگردید. به این مسیر بروید:  
 **Settings** -> **Secrets and variables** -> **Actions**  
