@@ -1,5 +1,12 @@
 ## 🔗 Direct Download Links
-> Click on any link below to start downloading directly. <br/>
+> Click on any link below to start downloading directly.
+
+
+
+
+### 📅 2026-04-27 11:44 IR
+- 📥 **[cmfa-2.11.27-meta-arm64-v8a-release.apk](https://github.com/nscl5/dl/raw/main/dl/cmfa-2.11.27-meta-arm64-v8a-release.apk)**
+- 📥 **[cmfa-2.11.27-meta-armeabi-v7a-release.apk](https://github.com/nscl5/dl/raw/main/dl/cmfa-2.11.27-meta-armeabi-v7a-release.apk)**
 
 
 ### 📅 2026-04-27 10:32 IR
