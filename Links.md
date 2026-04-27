@@ -2,13 +2,6 @@
 > Click on any link below to start downloading directly.<br/>
 
 
-
-### 📅 2026-04-27 18:08 IR
-- 📥 [n605rxexz49a](https://github.com/nscl5/dl/raw/main/dl/n605rxexz49a) `13 KB`
-
----
-
-
 ### 📅 2026-04-27 12:16 IR
 - 📥 [AmneziaVPN_4.8.15.0_arm64-v8a.apk.zip](https://github.com/nscl5/dl/raw/main/dl/AmneziaVPN_4.8.15.0_android9%2B_arm64-v8a.apk.zip)
 
