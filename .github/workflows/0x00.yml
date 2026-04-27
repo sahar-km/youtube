@@ -190,7 +190,7 @@ jobs:
           REPO="${{ github.repository }}"
           BRANCH="${GITHUB_REF_NAME}"
           
-          HEADER="# 🔗 Direct Download Links\n> Click on any link below to start downloading directly.\n\n"
+          HEADER="## 🔗 Direct Download Links\n> Click on any link below to start downloading directly.\n\n\n\n"
           
           echo "### 📅 $(TZ='Asia/Tehran' date +'%Y-%m-%d %H:%M') IR" > current_run.md
           
