@@ -26,6 +26,8 @@ on:
 jobs:
   download-and-save:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     permissions:
       contents: write
     steps:
@@ -46,9 +48,11 @@ jobs:
           echo "$HOME/.bun/bin" >> $GITHUB_PATH
 
       - name: Setup YouTube Cookies 
+        env:
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
         run: |
-          if [ -n "${{ secrets.YOUTUBE_COOKIES }}" ]; then
-            echo '${{ secrets.YOUTUBE_COOKIES }}' > youtube_cookies.txt
+          if [ -n "$YOUTUBE_COOKIES" ]; then
+            echo "$YOUTUBE_COOKIES" > youtube_cookies.txt
           else
             touch youtube_cookies.txt
           fi
@@ -67,7 +71,9 @@ jobs:
           _offline_subs = set()
 
           def is_bunkr_url(url): return any(dom in url for dom in BUNKRR_DOMAINS)
+          
           def get_slug(url): return __import__("re").search(r"/([a-zA-Z0-9_-]+)$", url).group(1) if __import__("re").search(r"/([a-zA-Z0-9_-]+)$", url) else None
+          
           def fetch_api(url):
               slug = get_slug(url)
               if not slug: return None
@@ -104,7 +110,6 @@ jobs:
           RAW_URLS="${{ github.event.inputs.url }}"
           QUALITY="${{ github.event.inputs.quality }}"
           
-          # Convert commas and enters to spaces for standardize links
           FORMATTED_URLS=$(echo "$RAW_URLS" | tr ',' ' ' | tr '\n' ' ')
           
           rm -rf tmp_downloads
@@ -122,9 +127,7 @@ jobs:
             YTDLP_F="--merge-output-format mp4"
           fi
 
-          # To process individual links
           for URL in $FORMATTED_URLS; do
-            # Skip if the section is empty.
             if [ -z "$URL" ]; then continue; fi
             
             echo "==========================================="
@@ -190,16 +193,34 @@ jobs:
           REPO="${{ github.repository }}"
           BRANCH="${GITHUB_REF_NAME}"
           
-          HEADER="## 🔗 Direct Download Links\n> Click on any link below to start downloading directly.\n\n\n\n"
+          HEADER="## 🔗 Direct Download Links\n> Click on any link below to start downloading directly.<br/>\n\n\n"
           
           echo "### 📅 $(TZ='Asia/Tehran' date +'%Y-%m-%d %H:%M') IR" > current_run.md
           
           while IFS= read -r FNAME; do
             ENCODED_NAME=$(python3 -c "import urllib.parse; print(urllib.parse.quote(input()))" <<< "$FNAME")
             RAW_URL="https://github.com/$REPO/raw/$BRANCH/dl/$ENCODED_NAME"
-            echo "- 📥 **[$FNAME]($RAW_URL)**" >> current_run.md
+            
+            DISPLAY_NAME=$(echo "$FNAME" | sed -E 's/android[0-9]+\+_//g; s/-release//g')
+            
+            # Using env variable and a python one-liner to prevent any YAML/Bash indentation errors
+            export FNAME_ENV="$FNAME"
+            SIZE_STR=$(python3 -c "import os; fname = os.environ.get('FNAME_ENV'); path = f'dl/{fname}'; size = os.path.getsize(path) if os.path.exists(path) else 0; print(f'{size/1048576:.1f} MB' if size >= 1048576 else f'{size//1024} KB')")
+            
+            EXT="${FNAME##*.}"
+            case "$EXT" in
+              apk)             ICON="📱" ;;
+              mp4|mkv|avi|mov) ICON="🎬" ;;
+              mp3|m4a|flac|ogg) ICON="🎵" ;;
+              zip|z[0-9]*)     ICON="🗜️" ;;
+              *)               ICON="📥" ;;
+            esac
+            
+            echo "- $ICON [$DISPLAY_NAME]($RAW_URL) \`$SIZE_STR\`" >> current_run.md
+            echo "" >> current_run.md
           done < new_files.txt
           
+          echo "---" >> current_run.md
           echo "" >> current_run.md
           
           if [ -f Links.md ]; then
